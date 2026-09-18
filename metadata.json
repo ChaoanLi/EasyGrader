@@ -1,5 +1,8 @@
 {
   "name": "EasyGrader",
-  "description": "AutoGrade Studio is a secure, customizable AI-powered homework grading tool. Bring your own Gemini API key, define your own grading policies, and let the app produce consistent, transparent, and explainable scores for writing, programming, math, and more. Your key and data never leave your device—full privacy, full control, zero setup hassle.",
-  "requestFramePermissions": []
+  "description": "AutoGrade Studio is a secure, customizable AI-powered homework and assignment grading tool. Define custom grading policies and generate consistent, transparent, and explainable scores and feedback for writing, programming, math, and STEM submissions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

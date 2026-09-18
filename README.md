@@ -1,95 +1,133 @@
-# EasyGrader AI 🎓
+# EasyGrader AI — Intelligent Multi-Model Homework & Assignment Evaluation Studio
 
-**A secure, customizable, AI-powered grading assistant for teachers, TAs, and self-learners.**
+[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
+[![Express 5](https://img.shields.io/badge/Express-5-black.svg)](https://expressjs.com/)
+[![DeepSeek-V3 / R1](https://img.shields.io/badge/DeepSeek-V3%20%7C%20R1-007ACC.svg)](https://deepseek.com/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o%20%7C%20o3--mini-412991.svg)](https://openai.com/)
+[![Anthropic Claude](https://img.shields.io/badge/Claude-3.5%20Sonnet-D97706.svg)](https://anthropic.com/)
+[![Google Gemini](https://img.shields.io/badge/Gemini-3.8%20Flash-4285F4.svg)](https://ai.google.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-EasyGrader AI allows you to bulk-grade assignments (PDFs, text files, Jupyter Notebooks) using Google's Gemini models. It is designed with a **"Bring Your Own Key" (BYOK)** architecture, ensuring your data and API keys never leave your device.
+> **Live Demo**: [EasyGrader Studio Preview](https://ais-pre-ydvisyhlsh4wfeqe2otxxb-711601100267.us-east1.run.app)
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Built with Gemini](https://img.shields.io/badge/Built%20with-Gemini-blue)
-
-## 🚀 Key Features
-
-*   **🔒 Secure BYOK Architecture**: Your API key is stored locally in your browser. We never see it, and we never store your student data.
-*   **⚙️ Fully Customizable Policies**: Define your own grading persona. Choose between strict syntax checking for code or conceptual leniency for essays.
-*   **⚡ Batch Processing**: Grade dozens of assignments in parallel.
-*   **📄 Multi-Format Support**: Works with PDFs, Python Notebooks (`.ipynb`), and plain text files.
-*   **📊 Instant Feedback**: Generates detailed score breakdowns and specific, constructive feedback for every student.
+**EasyGrader AI** is a production-grade, full-stack web application designed for educators, teaching assistants, and students. It automates objective rubric-based grading across diverse formats—including **PDFs**, **Jupyter Notebooks (`.ipynb`)**, **Python source code (`.py`)**, and **Markdown/Text files**—powered by built-in **DeepSeek-V3 & DeepSeek-R1** alongside modular multi-model interfaces for **ChatGPT (GPT-4o, o3-mini)**, **Anthropic Claude (3.5 Sonnet, 3.5 Haiku)**, and **Google Gemini (3.8 Flash)**.
 
 ---
 
-## 🚦 Getting Started (Onboarding)
+## Key Features
 
-### 1. Get your Gemini API Key
-To use this app, you need a free API key from Google.
-1.  Go to [Google AI Studio](https://aistudio.google.com/app/apikey).
-2.  Log in with your Google Account.
-3.  Click **"Create API Key"**.
-4.  Copy the key string (it starts with `AIza...`).
-
-### 2. Launch the App
-Open `index.html` in your browser (or visit the live demo link if hosted).
-
-### 3. Configure Your Assistant
-1.  **Enter API Key**: Paste your key when prompted. It is saved to your browser's LocalStorage.
-2.  **Choose a Template**: Select a grading style (Writing, Coding, or Math) or write your own custom instructions.
-3.  **Upload Files**:
-    *   **Assignment Spec**: The original homework instructions.
-    *   **Rubric**: How you want it graded.
-    *   **Student Files**: The actual work to grade.
-4.  **Run Grading**: Click "Grade" and watch the results stream in.
-
----
-
-## 📝 Customizable Grading Policies
-
-EasyGrader allows you to inject a "System Instruction" that controls the AI's behavior. We provide three starter templates:
-
-### 📝 English / Writing
-*   **Philosophy**: Focuses on clear arguments and evidence over minor grammar mistakes.
-*   **Tone**: "Constructive Editor" — helpful, encouraging, but precise.
-
-### 💻 Programming / Coding
-*   **Philosophy**: Prioritizes conceptual understanding. Does not deduct for minor syntax errors if the logic is sound, unless the code fails to run entirely.
-*   **Tone**: "Senior Engineer Code Review" — objective and technical.
-
-### ➗ Math / Logic
-*   **Philosophy**: Logic > Arithmetic. Awards partial credit for correct process even if the final number is slightly off.
-*   **Tone**: "Math Tutor" — pinpoints exactly where the proof went wrong.
-
-*You can edit these templates directly in the app before grading.*
+- **Multi-Model LLM Orchestration**:
+  - **DeepSeek (Default / Built-in)**: `deepseek-chat` (V3) for fast structured evaluation, and `deepseek-reasoner` (R1) with deep reasoning for mathematical & algorithmic proofs.
+  - **OpenAI / ChatGPT**: `gpt-4o-mini`, `gpt-4o`, and `o3-mini` reasoning engines.
+  - **Anthropic Claude**: `claude-3-5-sonnet` (nuanced grading & literary evaluation) and `claude-3-5-haiku`.
+  - **Google Gemini**: `gemini-3.8-flash` with sub-second grading and automatic fallback.
+  - **Secure BYOK & Server Key Architecture**: Seamlessly switch between built-in server keys or client-provided session keys.
+- **Multi-Format Client-Side Parsing**:
+  - In-browser PDF extraction using `pdfjs-dist`.
+  - Jupyter Notebook cell and output extraction (`.ipynb`).
+  - Source code and raw text ingestion with zero server storage.
+- **Batch Processing & Resilient Queueing**:
+  - Batching pipeline with exponential backoff and rate-limit mitigation.
+- **Configurable Evaluation Policies**:
+  - Built-in pedagogical templates: **Programming / Coding Review**, **English / Essay Writing**, and **Math / Logic Proofs**.
+  - Custom system prompt overrides for lenient vs. strict scoring philosophies.
+- **Structured Analytics & Gradebook Export**:
+  - Strict JSON schema enforcement ensuring every submission receives a total score and itemized deduction/praise breakdown.
+  - 1-click CSV export formatted for Canvas, Google Classroom, and Excel.
 
 ---
 
-## 🛡️ Privacy Notice
+## System Architecture
 
-We take privacy seriously. Because this is a client-side application:
-
-1.  **No Server Storage**: Your API key, grading rubrics, and student files are processed entirely in your browser memory.
-2.  **Direct Connection**: When you click "Grade", your browser sends the text directly to Google's Gemini API. It does not pass through our servers.
-3.  **Data Persistence**: Your API key and custom policy are saved in your browser's `LocalStorage` for convenience. You can clear this at any time by clearing your browser cache.
-
----
-
-## ❓ FAQ
-
-**Q: Is my API key safe?**
-A: Yes. It is never sent to the app developer. It resides in your browser's local storage and is only used to sign requests to Google.
-
-**Q: Why did the model give this score?**
-A: LLMs are probabilistic. While Gemini 2.5 is highly capable, it may occasionally hallucinate or miss details. Always review grades before finalizing them. You can adjust the "Policy" to be stricter or more lenient to guide the model.
-
-**Q: What does it cost?**
-A: The app itself is free. Google's Gemini API has a generous free tier. If you exceed the free tier limits, you pay Google directly based on your usage.
-
-**Q: What if I don't have a Google account?**
-A: You will need a Google account to generate the Gemini API key.
+```text
+[ Browser Client (React 19 + TypeScript + Vite) ]
+   ├── PDF.js & Notebook Parsers (Local text extraction)
+   ├── Model & Policy Customization UI
+   └── Batch Queue Dispatcher
+              │
+              │  POST /api/grade
+              ▼
+[ Backend API Gateway (Express 5 + Node.js) ]
+   ├── API Key Safeguards & Header Proxying
+   ├── Schema Validation & Prompt Assembly
+   ├── Gemini Engine (gemini-3.8-flash + automatic fallback)
+   └── DeepSeek Engine (deepseek-chat / deepseek-reasoner)
+              │
+              ▼
+[ Structured JSON Result ] ──► [ UI Breakdown & CSV Export ]
+```
 
 ---
 
-## 🤝 Contributing
+## Quick Start (Local Development)
 
-Contributions are welcome! Please fork the repository and submit a pull request.
+### 1. Clone & Install
+```bash
+git clone https://github.com/your-username/easygrader-ai.git
+cd easygrader-ai
+npm install
+```
 
-## 📄 License
+### 2. Configure Environment Variables
+Create a `.env` file from the template:
+```bash
+cp .env.example .env
+```
+Edit `.env` and provide your DeepSeek API key:
+```env
+# Only DeepSeek is required on the server!
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+```
+*(Note: ChatGPT, Claude, and Gemini do not require server configuration; users can simply input their own API keys via the frontend "API Keys" modal).*
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 3. Run Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Deployment Guide (Recommended for Portfolio)
+
+To showcase this project permanently for job applications, choose any of these free or low-cost hosting platforms:
+
+### Option 1: Render (Recommended • Free & Direct Git Sync)
+1. Push your repository to GitHub.
+2. Go to [Render Dashboard](https://dashboard.render.com/) -> **New Web Service**.
+3. Connect your GitHub repository.
+4. Set the following build and start settings:
+   - **Environment**: `Node`
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm run start`
+5. In **Environment Variables**, add:
+   - `DEEPSEEK_API_KEY`: your DeepSeek API key (Default built-in engine)
+   - `NODE_ENV`: `production`
+6. Render gives you an instant `https://easygrader.onrender.com` URL with free SSL.
+
+### Option 2: Railway or Zeabur
+1. Create a project on [Railway.app](https://railway.app).
+2. Deploy from GitHub Repo.
+3. Add `DEEPSEEK_API_KEY` in the Variables tab.
+4. Railway automatically detects `npm run build` and `npm run start`.
+
+### Option 3: Google Cloud Run
+In Google AI Studio, open the top-right menu and select **Deploy to Cloud Run** for zero-configuration Google Cloud deployment.
+
+---
+
+## Resume & Interview Talking Points
+
+If you are featuring this project on your resume, here are pre-crafted bullet points highlighting full-stack engineering, performance, and modern AI integration:
+
+- **Full-Stack LLM Engineering**: Architected an automated grading platform leveraging **React 19**, **TypeScript**, and **Express 5**, integrating **Gemini 3.8 Flash** and **DeepSeek-R1** via a secure server-side proxy.
+- **Resilience & Rate-Limit Handling**: Implemented a multi-model fallback pipeline with exponential backoff that automatically recovers from 503 high-demand surges and provider throttling.
+- **Client-Side Document Parsing**: Built zero-dependency in-browser extractors for PDFs and Jupyter Notebooks (`.ipynb`) with `pdfjs-dist`, minimizing server memory footprint and protecting student privacy.
+- **Strict Structured Outputs**: Enforced JSON schema responses across disparate LLM providers, delivering reliable evaluation breakdowns and CSV export for grading workflows.
+
+---
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.

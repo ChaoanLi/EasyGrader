@@ -288,20 +288,16 @@ th {
   padding-left: 1.2rem;
 }
 .feedback-breakdown li:before {
-  content: "⚠️";
+  content: "•";
   position: absolute;
   left: 0;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #ea8600;
 }
 .perfect-score {
   color: #137333;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.perfect-score:before {
-  content: "✅";
 }
 
 /* Loader & Status */

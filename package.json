@@ -12,7 +12,7 @@
   "dependencies": {
     "@google/genai": "^0.7.0",
     "express": "^5.2.1",
-    "pdfjs-dist": "4.4.168",
+    "pdfjs-dist": "4.10.38",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

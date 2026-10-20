@@ -5,9 +5,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
-// Configure pdf.js worker fallback
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://esm.sh/pdfjs-dist@4.4.168/build/pdf.worker.mjs`;
+// Bundle the worker from the installed PDF.js version to keep both in sync.
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 
 // --- CONSTANTS & TEMPLATES ---
 

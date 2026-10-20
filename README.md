@@ -11,7 +11,7 @@
 
 > **Live Demo**: [EasyGrader Studio Preview](https://ais-pre-ydvisyhlsh4wfeqe2otxxb-711601100267.us-east1.run.app)
 
-**EasyGrader AI** is a production-grade, full-stack web application designed for educators, teaching assistants, and students. It automates objective rubric-based grading across diverse formats—including **PDFs**, **Jupyter Notebooks (`.ipynb`)**, **Python source code (`.py`)**, and **Markdown/Text files**—powered by built-in **DeepSeek-V3 & DeepSeek-R1** alongside modular multi-model interfaces for **ChatGPT (GPT-4o, o3-mini)**, **Anthropic Claude (3.5 Sonnet, 3.5 Haiku)**, and **Google Gemini (3.8 Flash)**.
+**EasyGrader AI** is a full-stack web application designed for educators, teaching assistants, and students. It automates objective rubric-based grading across diverse formats—including **PDFs**, **Jupyter Notebooks (`.ipynb`)**, **Python source code (`.py`)**, and **Markdown/Text files**—powered by built-in **DeepSeek-V3 & DeepSeek-R1** alongside modular multi-model interfaces for **ChatGPT (GPT-4o, o3-mini)**, **Anthropic Claude (3.5 Sonnet, 3.5 Haiku)**, and **Google Gemini (3.8 Flash)**.
 
 ---
 
@@ -22,7 +22,7 @@
   - **OpenAI / ChatGPT**: `gpt-4o-mini`, `gpt-4o`, and `o3-mini` reasoning engines.
   - **Anthropic Claude**: `claude-3-5-sonnet` (nuanced grading & literary evaluation) and `claude-3-5-haiku`.
   - **Google Gemini**: `gemini-3.8-flash` with sub-second grading and automatic fallback.
-  - **Secure BYOK & Server Key Architecture**: Seamlessly switch between built-in server keys or client-provided session keys.
+  - **Secure BYOK & Server Key Architecture**: Seamlessly switch between built-in server keys or client-provided keys.
 - **Multi-Format Client-Side Parsing**:
   - In-browser PDF extraction using `pdfjs-dist`.
   - Jupyter Notebook cell and output extraction (`.ipynb`).
@@ -64,28 +64,34 @@
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/your-username/easygrader-ai.git
-cd easygrader-ai
+git clone https://github.com/ChaoanLi/EasyGrader.git
+cd EasyGrader
 npm install
 ```
 
-### 2. Configure Environment Variables
-Create a `.env` file from the template:
-```bash
-cp .env.example .env
-```
-Edit `.env` and provide your DeepSeek API key:
-```env
-# Only DeepSeek is required on the server!
-DEEPSEEK_API_KEY=your_deepseek_api_key_here
-```
-*(Note: ChatGPT, Claude, and Gemini do not require server configuration; users can simply input their own API keys via the frontend "API Keys" modal).*
+### 2. Configure an API key
 
-### 3. Run Development Server
-```bash
+The server reads API keys from its process environment. For the default DeepSeek engine, set a key in your terminal before starting the server:
+
+```sh
+export DEEPSEEK_API_KEY='replace-with-your-key'
+```
+
+You can also supply a provider key through the application. The server supports `DEEPSEEK_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, and `GEMINI_API_KEY`.
+
+The repository includes an `.env.example` template, but `server.ts` does not load dotenv files itself. Creating an `.env` file alone does not populate the server environment.
+
+### 3. Run the development server
+
+```sh
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Data flow
+
+Files are parsed in the browser. Extracted submission text, assignment instructions, and rubrics are sent to `/api/grade`, then forwarded to the selected model provider. Provider keys entered in the interface are stored in browser `localStorage` and sent to the backend for grading requests. This is not an entirely on-device workflow.
 
 ---
 
@@ -114,17 +120,6 @@ To showcase this project permanently for job applications, choose any of these f
 
 ### Option 3: Google Cloud Run
 In Google AI Studio, open the top-right menu and select **Deploy to Cloud Run** for zero-configuration Google Cloud deployment.
-
----
-
-## Resume & Interview Talking Points
-
-If you are featuring this project on your resume, here are pre-crafted bullet points highlighting full-stack engineering, performance, and modern AI integration:
-
-- **Full-Stack LLM Engineering**: Architected an automated grading platform leveraging **React 19**, **TypeScript**, and **Express 5**, integrating **Gemini 3.8 Flash** and **DeepSeek-R1** via a secure server-side proxy.
-- **Resilience & Rate-Limit Handling**: Implemented a multi-model fallback pipeline with exponential backoff that automatically recovers from 503 high-demand surges and provider throttling.
-- **Client-Side Document Parsing**: Built zero-dependency in-browser extractors for PDFs and Jupyter Notebooks (`.ipynb`) with `pdfjs-dist`, minimizing server memory footprint and protecting student privacy.
-- **Strict Structured Outputs**: Enforced JSON schema responses across disparate LLM providers, delivering reliable evaluation breakdowns and CSV export for grading workflows.
 
 ---
 

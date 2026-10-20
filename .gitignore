@@ -1,0 +1,14 @@
+# Dependencies and generated build files
+node_modules/
+dist/
+coverage/
+
+# Local environment files; keep the public configuration template
+.env
+.env.*
+!.env.example
+
+# Logs and editor/OS files
+*.log
+.DS_Store
+*.tsbuildinfo
